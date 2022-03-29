@@ -1,0 +1,29 @@
+.app{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding: 5%;
+}
+
+.info{
+   display:flex;
+   flex-direction:column;
+   justify-content: center;
+   align-items:center;
+}
+
+.info input{
+    width:50%;
+    height:5vh;
+    margin:1%;
+}
+
+.info button{
+    width:50%;
+    height:5vh;
+    margin:1%;
+}
+
+.info button:hover{
+    cursor: pointer;
+}
