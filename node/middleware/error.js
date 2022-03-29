@@ -8,6 +8,9 @@ const HandleErrorMiddleware = (err, req, res, next) => {
 
     if (response.code === `ER_BAD_NULL_ERROR`) {
         response.code = StatusCodes.BAD_REQUEST
+        const splitMsg = response.message.split(" ")
+        splitMsg.splice(0, 1);
+        response.message = splitMsg.join(" ");
     }
 
     res.status(response.code).json({ msg: response.message })
