@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import '../App.css'
+import '../../App.css'
 import Axios from 'axios'
 
 const Edit = () => {
@@ -15,15 +15,7 @@ const Edit = () => {
         setState(e.target.value)
     }
 
-    const addEmployee = () => {
-        Axios.post('http://localhost:3001/create', {
-            name, age, country, position, wage
-        }).then((response) => { console.log(response) })
-            .catch((error) => { console.log(error) })
-    }
-    const showEmployees = () => {
-        Axios.get('http://localhost:3001/get').then((response) => { setList(response.data) }).catch((error) => { console.log(error) })
-    }
+
 
     return (
         <div className="app">

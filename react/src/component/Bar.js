@@ -19,24 +19,30 @@ const Bar = () => {
 
         } catch (e) {
             //已註冊token過期
-            myContext.setUserStatus({ isSignIn: false, progress: "login" })
+            myContext.setUserStatus({ isSignIn: false, progress: "login", userAccount: "" })
         }
     }
 
     useEffect(() => {
-        console.log("bar render")
         handleUserStatus();
     }, [])
-    console.log("bar")
     return (
         <div className="appbar">
             <h1>Employee Dashboard</h1>
-            {myContext.userStatus.isSignIn &&
+            {myContext.userStatus.isSignIn ?
                 <div>
                     <h4>Welcome {myContext.userStatus.userAccount}</h4>
                     <h4 onClick={() => {
                         myContext.setUserStatus({ isSignIn: false, progress: "login" })
                     }}>登出</h4>
+                </div> :
+                <div>
+                    <h4 onClick={() => {
+                        myContext.setUserStatus({ isSignIn: false, progress: "login", userAccount: "" })
+                    }}>登入</h4>
+                    <h4 onClick={() => {
+                        myContext.setUserStatus({ isSignIn: false, progress: "register", userAccount: "" })
+                    }}>註冊</h4>
                 </div>
             }
 

@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/v1/authorization', authorizationRouter);
 app.use('/api/v1/authenticate', authenticateMiddleware, authenticateRouter);
-app.use('/api/v1/employee', employeeRoute);
+app.use('/api/v1/employee', authenticateMiddleware, employeeRoute);
 app.use(HandleMiddleware);
 
 
