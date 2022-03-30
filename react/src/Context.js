@@ -4,7 +4,8 @@ import { createContext } from "react";
 
 export const userStatus = {
     isSignIn: false,
-    progress: "register"
+    progress: "register",
+    userAccount: ""
 }
 
 

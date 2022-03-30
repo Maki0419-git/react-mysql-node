@@ -12,9 +12,10 @@ const Bar = () => {
             return
         }
         try {
-            await authenticate();
+            const userAccount = await authenticate();
+            console.log(userAccount)
             //已註冊token未過期
-            myContext.setUserStatus({ isSignIn: true, progress: "authorized" })
+            myContext.setUserStatus({ isSignIn: true, progress: "authorized", userAccount })
 
         } catch (e) {
             //已註冊token過期
@@ -30,9 +31,14 @@ const Bar = () => {
     return (
         <div className="appbar">
             <h1>Employee Dashboard</h1>
-            {myContext.userStatus.isSignIn && <h4 onClick={() => {
-                myContext.setUserStatus({ isSignIn: false, progress: "login" })
-            }}>登出</h4>}
+            {myContext.userStatus.isSignIn &&
+                <div>
+                    <h4>Welcome {myContext.userStatus.userAccount}</h4>
+                    <h4 onClick={() => {
+                        myContext.setUserStatus({ isSignIn: false, progress: "login" })
+                    }}>登出</h4>
+                </div>
+            }
 
         </div>
     )
