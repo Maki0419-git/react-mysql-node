@@ -1,12 +1,7 @@
 import axios from "axios";
 
-const addEmployee = (name, age, country, position, wage) => {
-    axios.post('http://localhost:3001/create', {
-        name, age, country, position, wage
-    }).then((response) => { console.log(response) })
-        .catch((error) => { console.log(error) })
-}
-const showEmployees = (setEmployees) => {
+
+const showEmployees = () => new Promise((resolve, reject) => {
     const token = localStorage.getItem('token');
     const options = {
         method: 'GET',
@@ -17,10 +12,49 @@ const showEmployees = (setEmployees) => {
     };
 
     axios.request(options).then(function (response) {
-        setEmployees(response.data);
+        resolve(response.data);
     }).catch(function (error) {
-        alert(error);
+        reject(error.response.data.msg);
     });
-}
+})
 
-export { addEmployee, showEmployees }
+
+const addEmployee = (name, age, country, position, wage) => new Promise((resolve, reject) => {
+    const token = localStorage.getItem('token');
+    const options = {
+        method: 'POST',
+        url: 'http://localhost:3001/api/v1/employee/',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+        },
+        data: { name, age, country, position, wage }
+    };
+
+    axios.request(options).then(function (response) {
+        resolve()
+    }).catch(function (error) {
+        reject(error.response.data.msg);
+    });
+})
+
+const deleteEmployee = (employee_ID) => new Promise((resolve, reject) => {
+    const token = localStorage.getItem('token');
+    const options = {
+        method: 'DELETE',
+        url: 'http://localhost:3001/api/v1/employee/',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+        },
+        data: { employee_ID }
+    };
+
+    axios.request(options).then(function (response) {
+        resolve();
+    }).catch(function (error) {
+        reject(error.response.data.msg);
+    });
+})
+
+export { addEmployee, showEmployees, deleteEmployee }

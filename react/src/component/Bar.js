@@ -31,7 +31,7 @@ const Bar = () => {
             <h1>Employee Dashboard</h1>
             {myContext.userStatus.isSignIn ?
                 <div>
-                    <h4>Welcome {myContext.userStatus.userAccount}</h4>
+                    <h4 style={{ position: "relative", top: 5 }}>Welcome {myContext.userStatus.userAccount}</h4>
                     <h4 onClick={() => {
                         myContext.setUserStatus({ isSignIn: false, progress: "login" })
                     }}>登出</h4>
