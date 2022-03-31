@@ -4,42 +4,46 @@ import { showEmployees } from '../../utils/db'
 
 const Table = () => {
     const [employees, setEmployees] = useState([]);
-    // useEffect(()=>{
-    //     showEmployees(setEmployees);
-    // },[])
+    useEffect(() => {
+        showEmployees(setEmployees);
+    }, [])
 
-    console.log(employees);
     return (
         <div className="info">
-            <table>
-                <caption>employee list</caption>
-                <thead>
-                    <tr>
-                        <th>項目</th>
-                        <th>金額</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>iPhone 11</td>
-                        <td>$24,900</td>
-                    </tr>
-                    <tr>
-                        <td>AirPods</td>
-                        <td>$6,490</td>
-                    </tr>
-                    <tr>
-                        <td>iPad Pro</td>
-                        <td>$25,900</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>總金額</th>
-                        <td>$57,290</td>
-                    </tr>
-                </tfoot>
-            </table>
+            {employees.allEmployees &&
+                <table>
+                    <caption><h2>Employee list</h2></caption>
+                    <thead>
+                        <tr>
+                            {Object.keys(employees.allEmployees[0]).map(title => <th key={title}>{title}</th>)}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            employees.allEmployees.map((employee) =>
+                                <tr key={employee.employee_ID}>
+                                    {Object.values(employee).map((info, index) =>
+                                        <td key={index}>
+                                            {info}
+                                        </td>
+                                    )}
+                                </tr>
+                            )
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>平均</td>
+                            <td></td>
+                            <td>{employees.average[0].averageAge}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{employees.average[0].averageWage}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            }
+
         </div>
     )
 }

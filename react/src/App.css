@@ -64,6 +64,11 @@
     border-spacing:0vh 3vh;
 }
 
+.info caption h2{
+    display: flex;
+    justify-content:flex-start
+}
+
 .info thead{
    background:slategray;
    color:white;
