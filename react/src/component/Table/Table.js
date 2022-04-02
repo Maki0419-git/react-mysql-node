@@ -6,7 +6,7 @@ import '../../App.css';
 import { showEmployees, deleteEmployee } from '../../utils/db'
 
 const Table = () => {
-    const [employees, setEmployees] = useState([]);
+    const [employees, setEmployees] = useState({});
     const [open, setOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState({});
 
@@ -40,37 +40,43 @@ const Table = () => {
 
     return (
         <div className="info">
-            {employees.allEmployees &&
-                <table>
-                    <caption><div><h2>Employee list</h2><AiOutlineUserAdd className="icon" onClick={() => setOpen(true)} /></div></caption>
-                    <thead>
-                        <tr>
-                            {Object.keys(employees.allEmployees[0]).map(title => <th key={title}>{title}</th>)}
-                            <th align='center'>delete</th>
-                            <th align='center'>edit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            employees.allEmployees.map((employee) =>
-                                <tr key={employee.employee_ID}>
-                                    {Object.values(employee).map((info, index) =>
-                                        <td key={index}>
-                                            {info}
-                                        </td>
 
-                                    )}
-                                    <td align='center' display='flex' >
-                                        <AiOutlineUserDelete className="icon" onClick={() => handleDelete(employee.employee_ID)} />
+            <table>
+                <caption><div><h2>Employee list</h2><AiOutlineUserAdd className="icon" onClick={() => setOpen(true)} /></div></caption>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>name</th>
+                        <th>age</th>
+                        <th>country</th>
+                        <th>position</th>
+                        <th>wage</th>
+                        <th align='center'>delete</th>
+                        <th align='center'>edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {employees.allEmployees && employees.allEmployees.length > 0 &&
+                        employees.allEmployees.map((employee) =>
+                            <tr key={employee.employee_ID}>
+                                {Object.values(employee).map((info, index) =>
+                                    <td key={index}>
+                                        {info}
                                     </td>
-                                    <td align='center' display='flex' >
-                                        <FaUserEdit className="icon" onClick={() => handleEdit(employee)} />
-                                    </td>
-                                </tr>
-                            )
-                        }
-                    </tbody>
-                    <tfoot>
+
+                                )}
+                                <td align='center' display='flex' >
+                                    <AiOutlineUserDelete className="icon" onClick={() => handleDelete(employee.employee_ID)} />
+                                </td>
+                                <td align='center' display='flex' >
+                                    <FaUserEdit className="icon" onClick={() => handleEdit(employee)} />
+                                </td>
+                            </tr>
+                        )
+                    }
+                </tbody>
+                <tfoot>
+                    {employees.allEmployees && employees.allEmployees.length > 0 &&
                         <tr>
                             <td>平均</td>
                             <td></td>
@@ -79,9 +85,9 @@ const Table = () => {
                             <td></td>
                             <td>{employees.average[0].averageWage}</td>
                         </tr>
-                    </tfoot>
-                </table>
-            }
+                    }
+                </tfoot>
+            </table>
             <Edit {...{ open, selectedItem, setSelectedItem, setOpen, readData }} />
         </div>
     )

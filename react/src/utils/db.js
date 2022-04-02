@@ -42,12 +42,11 @@ const deleteEmployee = (employee_ID) => new Promise((resolve, reject) => {
     const token = localStorage.getItem('token');
     const options = {
         method: 'DELETE',
-        url: 'http://localhost:3001/api/v1/employee/',
+        url: `http://localhost:3001/api/v1/employee/${employee_ID}`,
         headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`
         },
-        data: { employee_ID }
     };
 
     axios.request(options).then(function (response) {

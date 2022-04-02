@@ -19,11 +19,9 @@ const getAllEmployees = async (req, res, next) => {
 }
 
 const deleteEmployee = async (req, res, next) => {
-    console.log(typeof (req.body))
-    const { employee_ID } = req.body
-    console.log(employee_ID)
+    const id = req.params.id;
     try {
-        await sqlAsync(`DELETE FROM employee_system.employees Where employee_ID=${Number(employee_ID)}`);
+        await sqlAsync(`DELETE FROM employee_system.employees Where employee_ID=${Number(id)}`);
         res.status(StatusCodes.OK).json({ msg: "delete successful" });
     } catch (err) {
         if (err instanceof DBError) {
