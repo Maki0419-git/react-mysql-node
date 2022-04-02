@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode"; //doc:https://www.npmjs.com/package/jwt-dec
 const register = (account, password) => new Promise(async (resolve, reject) => {
     const options = {
         method: 'POST',
-        url: 'http://localhost:3001/api/v1/authorization/signup',
+        url: 'https://react-node-mysql-heroku.herokuapp.com/api/v1/authorization/signup',
         headers: { 'Content-Type': 'application/json' },
         data: { account, password }
     };
@@ -26,7 +26,7 @@ const register = (account, password) => new Promise(async (resolve, reject) => {
 const login = (account, password) => new Promise(async (resolve, reject) => {
     const options = {
         method: 'POST',
-        url: 'http://localhost:3001/api/v1/authorization/login',
+        url: 'https://react-node-mysql-heroku.herokuapp.com/api/v1/authorization/login',
         headers: { 'Content-Type': 'application/json' },
         data: { account, password }
     };
@@ -49,7 +49,7 @@ const authenticate = () => new Promise(async (resolve, reject) => {
     const token = localStorage.getItem('token');
     const options = {
         method: 'GET',
-        url: 'http://localhost:3001/api/v1/authenticate',
+        url: 'https://react-node-mysql-heroku.herokuapp.com/api/v1/authenticate',
         headers: {
             Authorization: `Bearer ${token}`
         }
