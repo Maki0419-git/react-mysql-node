@@ -21,5 +21,5 @@ app.use('/api/v1/employee', authenticateMiddleware, employeeRoute);
 app.use(HandleErrorMiddleware);
 
 
-
-app.listen(3001, () => console.log('listening on 3001...'))
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`listening on ${port}`))
