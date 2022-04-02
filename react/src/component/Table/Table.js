@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { AiOutlineUserDelete, AiOutlineUserAdd } from 'react-icons/ai'
-import Add from './Add';
+import { FaUserEdit } from 'react-icons/fa';
+import Edit from './Edit';
 import '../../App.css';
 import { showEmployees, deleteEmployee } from '../../utils/db'
 
 const Table = () => {
     const [employees, setEmployees] = useState([]);
-    const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState({});
 
     const readData = async () => {
         try {
@@ -17,6 +19,7 @@ const Table = () => {
         }
 
     }
+
     const handleDelete = async (employee_ID) => {
         try {
             await deleteEmployee(employee_ID);
@@ -24,6 +27,11 @@ const Table = () => {
         } catch (err) {
             alert(err)
         }
+    }
+
+    const handleEdit = (item) => {
+        setSelectedItem(item);
+        setOpen(true);
     }
 
     useEffect(() => {
@@ -34,11 +42,12 @@ const Table = () => {
         <div className="info">
             {employees.allEmployees &&
                 <table>
-                    <caption><div><h2>Employee list</h2><AiOutlineUserAdd onClick={() => setOpen(true)} /></div></caption>
+                    <caption><div><h2>Employee list</h2><AiOutlineUserAdd className="icon" onClick={() => setOpen(true)} /></div></caption>
                     <thead>
                         <tr>
                             {Object.keys(employees.allEmployees[0]).map(title => <th key={title}>{title}</th>)}
-                            <th align='center'>action</th>
+                            <th align='center'>delete</th>
+                            <th align='center'>edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,8 +60,11 @@ const Table = () => {
                                         </td>
 
                                     )}
-                                    <td align='center' className="icon">
-                                        <AiOutlineUserDelete onClick={() => handleDelete(employee.employee_ID)} />
+                                    <td align='center' display='flex' >
+                                        <AiOutlineUserDelete className="icon" onClick={() => handleDelete(employee.employee_ID)} />
+                                    </td>
+                                    <td align='center' display='flex' >
+                                        <FaUserEdit className="icon" onClick={() => handleEdit(employee)} />
                                     </td>
                                 </tr>
                             )
@@ -70,7 +82,7 @@ const Table = () => {
                     </tfoot>
                 </table>
             }
-            <Add open={open} setOpen={setOpen} readData={readData} />
+            <Edit {...{ open, selectedItem, setSelectedItem, setOpen, readData }} />
         </div>
     )
 }

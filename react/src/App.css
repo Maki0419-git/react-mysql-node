@@ -1,4 +1,4 @@
-body, h1, h2, h3, h4, h5, h6{
+body, h1, h2, h3, h4, h5, h6,button, input{
     font-family:'Josefin Sans', sans-serif;
 }
 
@@ -88,11 +88,12 @@ body, h1, h2, h3, h4, h5, h6{
 }
 
 .info th{
-    padding-left: 1.5vw;
+    padding:0vw 1.5vw;
 }
 
 .info table .icon{
     color:slategray;
+    cursor: pointer;
 }
 
 .info tr{
@@ -109,9 +110,8 @@ body, h1, h2, h3, h4, h5, h6{
 }
 
 .info td{
-    padding: 0; 
     margin:0;
-    padding-left: 1.5vw;
+    padding:0vw 1.5vw;
     font-weight: 600;
 }
 

@@ -1,27 +1,31 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { TiDeleteOutline } from 'react-icons/ti'
-import { addEmployee } from '../../utils/db';
+import { addEmployee, editEmployee } from '../../utils/db';
 import '../../App.css'
 
 
-const Add = ({ open, setOpen, readData }) => {
+const Edit = ({ open, setOpen, readData, selectedItem, setSelectedItem }) => {
     const [name, setName] = useState("");
     const [age, setAge] = useState("");
     const [country, setCountry] = useState("");
     const [position, setPosition] = useState("");
     const [wage, setWage] = useState("");
-    const [list, setList] = useState([]);
     const [display, setDisplay] = useState("none");
+    const action = useRef("Add")
 
 
     const inputHandler = (e, setState) => {
         setState(e.target.value)
     }
 
-    const handleAdd = async () => {
+    const handleEdit = async () => {
         try {
-            await addEmployee(name, age, country, position, wage)
+            if (action.current === "Add") {
+                await addEmployee(name, age, country, position, wage)
+            } else if (action.current === "Edit") {
+                await editEmployee(selectedItem.employee_ID, name, age, country, position, wage)
+            }
             setOpen(false);
             readData();
         } catch (err) {
@@ -30,10 +34,28 @@ const Add = ({ open, setOpen, readData }) => {
     }
 
     useEffect(() => {
+        console.log(selectedItem)
         if (open) {
             setDisplay("block")
-        } else {
+            if (selectedItem.employee_ID) {
+                action.current = "Edit"
+                const { name, age, country, position, wage } = selectedItem;
+                setName(name);
+                setAge(age);
+                setPosition(position);
+                setCountry(country);
+                setWage(wage);
+            }
+        }
+        else {
             setDisplay("none")
+            action.current = "Add"
+            setName("")
+            setAge("")
+            setCountry("")
+            setPosition("")
+            setWage("")
+            setSelectedItem({})
         }
     }, [open])
 
@@ -70,11 +92,11 @@ const Add = ({ open, setOpen, readData }) => {
                         onChange={(e) => inputHandler(e, setWage)}
                     />
                 </div>
-                <button onClick={handleAdd}>Add</button>
+                <button onClick={handleEdit}>{action.current}</button>
             </div>
         </div>
 
     )
 }
 
-export default Add
+export default Edit

@@ -57,4 +57,26 @@ const deleteEmployee = (employee_ID) => new Promise((resolve, reject) => {
     });
 })
 
-export { addEmployee, showEmployees, deleteEmployee }
+
+const editEmployee = (id, name, age, country, position, wage) => new Promise((resolve, reject) => {
+    const token = localStorage.getItem('token');
+    const options = {
+        method: 'PUT',
+        url: `http://localhost:3001/api/v1/employee/${id}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+        },
+        data: { name, age, country, position, wage }
+    };
+
+    axios.request(options).then(function (response) {
+        console.log(response.data);
+        resolve()
+    }).catch(function (error) {
+        console.error(error);
+        reject(error.response.data.msg)
+    });
+})
+
+export { addEmployee, showEmployees, deleteEmployee, editEmployee }
