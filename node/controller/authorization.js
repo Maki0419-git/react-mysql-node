@@ -13,7 +13,7 @@ const UserLogin = async (req, res, next) => {
     if (!account || !password) return res.status(StatusCodes.BAD_REQUEST).json({ msg: "please provide account and password" });
     try {
         //get user_ID,account,password in db
-        const result = await sqlAsync(`SELECT user_ID,account,password FROM employee_system.user Where account="${account}"`)
+        const result = await sqlAsync(`SELECT user_ID,account,password FROM user Where account="${account}"`)
         if (!result.length) return res.status(StatusCodes.BAD_REQUEST).json({ msg: "account isn't exist" });
         //check password
         const hash = result[0].password;

@@ -6,8 +6,8 @@ const { checkIfFieldCompleted, checkIfNumbered } = require('../utils');
 
 const getAllEmployees = async (req, res, next) => {
     try {
-        const allEmployees = await sqlAsync(`SELECT * FROM employee_system.employees`);
-        const average = await sqlAsync(`SELECT AVG(age) as averageAge, AVG(wage) as averageWage from employee_system.employees`)
+        const allEmployees = await sqlAsync(`SELECT * FROM employees`);
+        const average = await sqlAsync(`SELECT AVG(age) as averageAge, AVG(wage) as averageWage from employees`)
         res.status(StatusCodes.OK).json({ allEmployees, average });
     } catch (err) {
         if (err instanceof DBError) {
@@ -21,7 +21,7 @@ const getAllEmployees = async (req, res, next) => {
 const deleteEmployee = async (req, res, next) => {
     const id = req.params.id;
     try {
-        await sqlAsync(`DELETE FROM employee_system.employees Where employee_ID=${Number(id)}`);
+        await sqlAsync(`DELETE FROM employees Where employee_ID=${Number(id)}`);
         res.status(StatusCodes.OK).json({ msg: "delete successful" });
     } catch (err) {
         if (err instanceof DBError) {
