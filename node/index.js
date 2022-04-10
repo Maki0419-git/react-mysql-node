@@ -6,7 +6,6 @@ app.set('trust proxy', 1) // trust first proxy
 const cors = require('cors');
 const session = require('express-session')
 // route
-const authorizationRouter = require('./route/authorization');
 const authenticateRouter = require('./route/authenticate');
 const employeeRoute = require('./route/employee');
 // custom middleware
@@ -26,14 +25,15 @@ app.use(session({
     secret: process.env.Session_key,
     name: 'user_ID',
     saveUninitialized: false,
-    resave: false,
+    proxy: true,
+    resave: true,
     cookie: {
         sameSite: 'none',
         secure: (process.env.NODE_ENV && process.env.NODE_ENV == 'production') ? true : false
     }
 }))
 app.use(express.json());
-app.use('/api/v1/authorization', authorizationRouter);
+app.use('/api/v1/authenticate', authenticateRouter);
 app.use('/api/v1/authenticateUser', authenticateUserMiddleware);
 app.use('/api/v1/employee', authenticateTokenMiddleware, employeeRoute);
 app.use(HandleErrorMiddleware);
