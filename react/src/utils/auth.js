@@ -1,8 +1,8 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode"; //doc:https://www.npmjs.com/package/jwt-decode
-import { development, deployment } from "./setting";
+import { development, production } from "./setting";
 
-const domain = deployment
+const domain = production
 axios.defaults.withCredentials = true;
 
 const register = (account, password) => new Promise(async (resolve, reject) => {
