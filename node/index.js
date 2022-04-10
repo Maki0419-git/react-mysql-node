@@ -1,23 +1,39 @@
 require('dotenv').config();
-//package
+// package
 const express = require('express');
 const app = express();
+app.set('trust proxy', 1) // trust first proxy
 const cors = require('cors');
-//route
+const session = require('express-session')
+// route
 const authorizationRouter = require('./route/authorization');
 const authenticateRouter = require('./route/authenticate');
 const employeeRoute = require('./route/employee');
-//middleware
+// custom middleware
 const HandleErrorMiddleware = require('./middleware/error');
-const authenticateMiddleware = require('./middleware/authenticate');
+const authenticateTokenMiddleware = require('./middleware/authenticateToken');
+const authenticateUserMiddleware = require('./middleware/authenticateUser');
 
 
-//middleware
-app.use(cors());
+// middleware
+app.use(cors({
+    origin: 'http://localhost:3001',
+    credentials: true,
+}));
+// session setting
+app.use(session({
+    secret: process.env.Session_key,
+    name: 'user_ID',
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+        secure: (process.env.NODE_ENV && process.env.NODE_ENV == 'production') ? true : false
+    }
+}))
 app.use(express.json());
 app.use('/api/v1/authorization', authorizationRouter);
-app.use('/api/v1/authenticate', authenticateMiddleware, authenticateRouter);
-app.use('/api/v1/employee', authenticateMiddleware, employeeRoute);
+app.use('/api/v1/authenticateUser', authenticateUserMiddleware);
+app.use('/api/v1/employee', authenticateTokenMiddleware, employeeRoute);
 app.use(HandleErrorMiddleware);
 
 

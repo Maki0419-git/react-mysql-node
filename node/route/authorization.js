@@ -1,7 +1,7 @@
 const express = require('express');
 const authorizationRouter = express.Router();
-const { UserLogin, UserSignUp } = require('../controller/authorization');
+const { UserLogin, UserSignUp, UserLogout } = require('../controller/authorization');
 
-authorizationRouter.post('/login', UserLogin).post('/signup', UserSignUp);
+authorizationRouter.post('/login', UserLogin).post('/signup', UserSignUp).get('/logout', UserLogout);
 
 module.exports = authorizationRouter;
