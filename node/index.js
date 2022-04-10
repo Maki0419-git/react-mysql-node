@@ -17,7 +17,7 @@ const authenticateUserMiddleware = require('./middleware/authenticateUser');
 
 // middleware
 app.use(cors({
-    origin: 'http://localhost:3001',
+    origin: 'https://maki0419-git.github.io',
     credentials: true,
 }));
 // session setting

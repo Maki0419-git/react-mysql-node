@@ -1,7 +1,7 @@
 import axios from "axios";
 import { development, deployment } from "./setting";
 
-const domain = development
+const domain = deployment
 
 const showEmployees = () => new Promise((resolve, reject) => {
     const token = localStorage.getItem('token');
