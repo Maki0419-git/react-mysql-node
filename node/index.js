@@ -19,6 +19,7 @@ const authenticateUserMiddleware = require('./middleware/authenticateUser');
 app.use(cors({
     origin: 'https://maki0419-git.github.io',
     credentials: true,
+    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS']
 }));
 // session setting
 app.use(session({
