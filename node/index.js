@@ -28,6 +28,7 @@ app.use(session({
     proxy: true,
     resave: true,
     cookie: {
+        domain: 'https://maki0419-git.github.io/',
         sameSite: 'none',
         secure: (process.env.NODE_ENV && process.env.NODE_ENV == 'production') ? true : false
     }
