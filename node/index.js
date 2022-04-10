@@ -28,6 +28,7 @@ app.use(session({
     saveUninitialized: false,
     resave: false,
     cookie: {
+        sameSite: 'none',
         secure: (process.env.NODE_ENV && process.env.NODE_ENV == 'production') ? true : false
     }
 }))
